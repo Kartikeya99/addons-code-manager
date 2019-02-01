@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import log from 'loglevel';
+import Raven from 'raven-js';
 
 import './styles.scss';
 import App from './components/App';
@@ -14,6 +15,10 @@ if (process.env.NODE_ENV === 'production') {
   log.setLevel(log.levels.INFO, false);
 } else {
   log.setLevel(log.levels.DEBUG, false);
+}
+
+if (process.env.REACT_APP_SENTRY_DSN) {
+  Raven.config(process.env.REACT_APP_SENTRY_DSN).install();
 }
 
 const store = configureStore();
